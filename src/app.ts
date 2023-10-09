@@ -1,12 +1,12 @@
 import express from "express";
-
 import session from "express-session";
 import passport from "passport";
 import router from "./routes/routes";
-// import passport from "./auth"
-// import auth from "./"
+import { db } from "../database/db";
 
 require("./utils/auth.js");
+
+db();
 
 const app = express();
 
@@ -17,8 +17,6 @@ app.use(passport.session());
 app.use("/", router);
 
 app.listen(8080, () => console.log("listening on port: 8080"));
-
-
 
 
 

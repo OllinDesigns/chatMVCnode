@@ -1,7 +1,8 @@
 // src/routes/routes.ts
 
 import express from "express";
-import * as authController from "../controllers/loginController";
+import * as authController from "../controllers/authController";
+import * as userController from "../controllers/userController";
 
 const router = express.Router();
 
@@ -16,9 +17,21 @@ router.get("/logout", authController.handleLogout);
 
 router.get("/auth/google/failure", authController.handleGoogleFailure);
 
+// Protected routes
+router.get("/chat", authController.isLoggedIn, userController.getChatPage); // Route to display chat page
+router.get("/api/messages", authController.isLoggedIn, userController.getMessages); // Route to get messages
+router.post("/api/messages", authController.isLoggedIn, userController.sendMessage); // Route to send a message
+
+
+
+
+
 export default router;
 
 
+
+
+// alright! this works! now is time to define my database model or schema and set upt the configuration for connecting with mongodb. this is where my app necessary information will be stored. 
 
 
 

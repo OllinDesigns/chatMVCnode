@@ -10,7 +10,8 @@
   },
   "scripts": {
     "test": "jest",
-    "start": "node dist/src/app.ts",
+    "start": "ts-node ./src/app.ts",
+
     "build": "tsc",
     "dev": "ts-node-dev --respawn --transpile-only ./src/app.ts"
   },

@@ -1,0 +1,168 @@
+// esta en typescript copila bien
+
+// import passport from "passport";
+// import passportGoogle from "passport-google-oauth20";
+// // import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from "../utils/secrets";
+// const GoogleStrategy = passportGoogle.Strategy;
+
+// const GOOGLE_CLIENT_ID = '843742050724-vndj4s6l74vhd8a66m8ct73gtqj254i2.apps.googleusercontent.com';
+// const GOOGLE_CLIENT_SECRET = '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';
+
+
+// passport.use(
+//   new GoogleStrategy(
+//     {
+//       clientID: GOOGLE_CLIENT_ID,
+//       clientSecret: GOOGLE_CLIENT_SECRET,
+//       callbackURL: "http://localhost:5000/auth/google/callback",
+//       //callbackURL: "/auth/google/redirect",
+//       passReqToCallback: true,
+//     },
+//     (accessToken, refreshToken, profile, done) => {
+//       // get profile details
+//       // save profile details in db
+//     }
+//   )
+// );
+
+// // function(request, accessToken, refreshToken, profile, done) {
+// //     return done(null, profile); //  aqui se debe configurar para que funcione en la base de datos
+// //   }));
+  
+//   passport.serializeUser(function(user, done) {
+//     done(null, user);
+//   });
+  
+//   passport.deserializeUser(function(user: any, done) {
+//     done(null, user);
+//   });
+
+
+// export default passport
+
+
+
+
+
+
+// import passport from "passport";
+// const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
+
+
+// // Replace these with your actual Google OAuth credentials
+// const GOOGLE_CLIENT_ID = '843742050724-vndj4s6l74vhd8a66m8ct73gtqj254i2.apps.googleusercontent.com';
+// const GOOGLE_CLIENT_SECRET = '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';
+
+// passport.use(
+//   new GoogleStrategy(
+//     {
+//       clientID: GOOGLE_CLIENT_ID,
+//       clientSecret: GOOGLE_CLIENT_SECRET,
+//       callbackURL: "http://localhost:5000/auth/google/callback",
+//       passReqToCallback: true,
+//     },
+//     (
+//       request,
+//       accessToken,
+//       refreshToken,
+//       profile,
+//       done
+//     ) => {
+//       // Your verification logic here
+//       // Call 'done' when verification is complete
+//       // For example, you can check if the user exists and create them if not
+//       // Then call 'done' with the user or an error
+//       // For example:
+//       // if (userExists) {
+//       //   return done(null, user);
+//       // } else {
+//       //   createUser(profile, (err, user) => {
+//       //     if (err) {
+//       //       return done(err);
+//       //     }
+//       //     return done(null, user);
+//       //   });
+//       // }
+//     }
+//   )
+// );
+// passport.serializeUser((user, done) => {
+//   done(null, user);
+// });
+
+// export function use(arg0: any) {
+//   throw new Error("Function not implemented.");
+// }
+
+
+// passport.deserializeUser((user, done) => {
+//   done(null, user);
+// });
+
+
+// export default passport;
+
+
+
+
+// asi es en javascript
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth2').Strategy;
+
+const GOOGLE_CLIENT_ID = '843742050724-vndj4s6l74vhd8a66m8ct73gtqj254i2.apps.googleusercontent.com';
+const GOOGLE_CLIENT_SECRET = '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';
+
+passport.use(new GoogleStrategy({
+  clientID: GOOGLE_CLIENT_ID,
+  clientSecret: GOOGLE_CLIENT_SECRET,
+  callbackURL: "http://localhost:5000/auth/google/callback",
+  passReqToCallback: true,
+},
+function(request, accessToken, refreshToken, profile, done) {
+  return done(null, profile); //  aqui se debe configurar para que funcione en la base de datos
+}));
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+
+
+
+
+
+
+// asi seria en typescript pero hay que definir el Use antes...
+// import passport from 'passport';
+// import { Strategy as GoogleStrategy } from 'passport-google-oauth2';
+// import { Request } from 'express'; // Assuming you are using Express
+// // import User from './models/user'; // Replace with the path to your User model
+
+// // Replace these with your actual Google OAuth credentials
+// const GOOGLE_CLIENT_ID = '843742050724-vndj4s6l74vhd8a66m8ct73gtqj254i2.apps.googleusercontent.com';
+// const GOOGLE_CLIENT_SECRET = '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';
+
+// passport.use(
+//   new GoogleStrategy(
+//     {
+//       clientID: GOOGLE_CLIENT_ID,
+//       clientSecret: GOOGLE_CLIENT_SECRET,
+//       callbackURL: 'http://localhost:5000/google/callback',
+//       passReqToCallback: true,
+//     },
+//     (
+//       request: Request,
+//       accessToken: string,
+//       refreshToken: string,
+//       profile: any,
+//       done: (error: any, user?: any) => void
+//     ) => {
+//       User.findOrCreate({ googleId: profile.id }, (err: any, user: any) => {
+//         return done(err, user);
+//       });
+//     }
+//   )
+// );

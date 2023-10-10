@@ -3,20 +3,73 @@ import session from "express-session";
 import passport from "passport";
 import router from "./routes/routes";
 import { db } from "../database/db";
+import cors from "cors"
 
-require("./utils/auth.js");
 
+// Import your authentication configuration (Passport.js setup)
+import "./utils/auth";
+
+// Initialize the database connection
 db();
 
 const app = express();
 
-app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+// Enable CORS
+app.use(cors());
+
+// Parse JSON and URL-encoded bodies
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+// Session management
+app.use(
+  session({
+    secret: "cats",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
+// Initialize Passport.js for authentication
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Use the defined routes
 app.use("/", router);
 
-app.listen(8080, () => console.log("listening on port: 8080"));
+app.listen(8080, () => console.log("Listening on port: 8080"));
+
+
+
+
+// esta funciona, es antes de hacer la http request
+// import express from "express";
+// import session from "express-session";
+// import passport from "passport";
+// import router from "./routes/routes";
+// import { db } from "../database/db";
+// import cors from "cors"
+
+// require("./utils/auth.js");
+
+
+
+// db();
+
+// const app = express();
+
+// app.use(cors());
+
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
+
+// app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+// app.use(passport.initialize());
+// app.use(passport.session());
+
+// app.use("/", router);
+
+// app.listen(8080, () => console.log("listening on port: 8080"));
 
 
 

@@ -1,3 +1,5 @@
+esta inserta el usuario a la base de datos!!!
+
 // este funciona pero no agrega a la base de datos// src/controllers/authController.ts
 import session from "express-session";
 import { Request, Response, NextFunction } from "express";
@@ -14,6 +16,7 @@ declare module "express-session" {
 // Middleware to check if the user is authenticated
 export const isLoggedIn = (req: Request, res: Response, next: NextFunction) => {
   if (req.isAuthenticated()) {
+
     return next();
   }
 
@@ -25,50 +28,42 @@ export const authenticateGoogle = passport.authenticate("google", {
   scope: ["email", "profile"],
 });
 
-
-export const handleGoogleCallback = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const handleGoogleCallback = (req: Request, res: Response, next: NextFunction) => {
   passport.authenticate("google", async (err: any, user: IUser, info: any) => {
     if (err) {
       // Handle authentication error
-      console.error("Authentication error:", err);
       return res.redirect("/auth/google/failure");
     }
 
     if (!user) {
       // Handle failed authentication
-      console.error("Authentication failed.");
       return res.redirect("/auth/google/failure");
     }
-
     try {
-      // Insert the user into the database immediately after successful authentication
-      await userController.createUserFromOAuth({
-        googleId: user.googleId,
-        displayName: user.displayName,
-      });
-
       // Store the user data in the session
       req.session.user = {
         googleId: user.googleId,
         displayName: user.displayName,
         // Add other properties as needed
       };
-
-      console.log("user added to session:", req.session.user);
-
+    
+      console.log('user added to session:', req.session.user);
+    
+      // Use the createUser function from userController to insert the authenticated user into the database
+      await userController.createUser(req, res);
+    
       // Redirect to a success page or route
       return res.redirect("/auth/google/success");
     } catch (error) {
       console.error("Error inserting user into the database:", error);
-      // Redirect to a failure page or route
       return res.redirect("/auth/google/failure");
     }
+    
   })(req, res, next);
 };
+
+
+
 
 
 // Add a new route to print user information
@@ -142,74 +137,36 @@ export const handleGoogleFailure = (req: Request, res: Response) => {
   res.send("Failed to authenticate..");
 };
 
-// export const handleGoogleCallback = (req: Request, res: Response, next: NextFunction) => {
-//   passport.authenticate("google", async (err: any, user: IUser, info: any) => {
-//     if (err) {
-//       // Handle authentication error
-//       return res.redirect("/auth/google/failure");
-//     }
 
-//     if (!user) {
-//       // Handle failed authentication
-//       return res.redirect("/auth/google/failure");
-//     }
 
-//     try {
-//       // Store the user data in the session
-//       req.session.user = {
-//         googleId: user.googleId,
-//         displayName: user.displayName,
-//         // Add other properties as needed
-//       };
 
-//       console.log('user added to session:', req.session.user);
+viejas versiones
+// src/controllers/authController.ts
+import session from "express-session";
+import { Request, Response, NextFunction } from "express";
+import passport from "passport";
+// import * as userController from "../controllers/userController";
 
-//       // Use the createUser function from userController to insert the authenticated user into the database
-//       await userController.createUser(req, res);
+// Middleware to check if the user is authenticated
+export const isLoggedIn = (req: Request, res: Response, next: NextFunction) => {
+  if (req.isAuthenticated()) {
+    // If authenticated, continue to the next middleware
+    return next();
+  }
 
-//       // Redirect to a success page or route
-//       return res.redirect("/auth/google/success");
+  // If not authenticated, send a 401 Unauthorized status
+  res.sendStatus(401);
+};
 
-//     } catch (error) {
-//       console.error("Error inserting user into the database:", error);
-//       return res.redirect("/auth/google/failure");
-//     }
-//   })(req, res, next);
-// };
+export const authenticateGoogle = passport.authenticate("google", {
+  scope: ["email", "profile"],
+});
 
-// export const handleGoogleCallback = (req: Request, res: Response, next: NextFunction) => {
-//   passport.authenticate("google", async (err: any, user: IUser, info: any) => {
-//     if (err) {
-//       // Handle authentication error
-//       return res.redirect("/auth/google/failure");
-//     }
+export const handleGoogleCallback = passport.authenticate("google", {
+  successRedirect: "/chat", // Redirect to the chat page on successful authentication
+  failureRedirect: "/auth/google/failure",
+});
 
-//     if (!user) {
-//       // Handle failed authentication
-//       return res.redirect("/auth/google/failure");
-//     }
-
-//     try {
-//       // Use the createUser function from userController to insert the authenticated user into the database
-//       await userController.createUser(req, res);
-
-//       console.log('user added to database')
-
-//       // Redirect to a success page or route
-//       return res.redirect("/auth/google/success");
-
-//     } catch (error) {
-//       console.error("Error inserting user into the database:", error);
-//       return res.redirect("/auth/google/failure");
-//     }
-//   })(req, res, next);
-// };
-
-// esta funciona
-// export const handleGoogleCallback = passport.authenticate("google", {
-//   successRedirect: "/chat", // Redirect to the chat page on successful authentication
-//   failureRedirect: "/auth/google/failure",
-// });
 
 // esta es la actual, funciona
 // export const handleGoogleCallback = passport.authenticate("google", {
@@ -218,6 +175,60 @@ export const handleGoogleFailure = (req: Request, res: Response) => {
 // });
 
 // esta es la nueva funcion
+
+// interface AuthenticatedUser {
+//   googleId: string;
+//   displayName: string;
+//   // Add other properties as needed
+// }
+
+// This should resolve the TypeScript error, and your createOrUpdateUser function should work as intended.
+
+// export const createOrUpdateUser = async (req: Request & { user: AuthenticatedUser }, res: Response, next: NextFunction) => {
+//   try {
+//     // Access the authenticated user's profile from the request
+//     const { user } = req;
+
+//     // Call the createUserFromOAuth function with user data
+//     const createdUser = await userController.createUserFromOAuth(user);
+
+//     // Set the user in the session if needed
+//     // req.session.user = createdUser;
+
+//     return createdUser
+
+//     // Redirect or handle the next step as needed
+//     res.redirect("/chat"); // Redirect to the chat page or another route
+//   } catch (error) {
+//     console.error("Error creating/updating user profile:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// };
+
+
+export const handleProtectedRoute = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  res.send(`Hello`);
+};
+
+export const handleLogout = (req: Request, res: Response) => {
+  req.logout((err: any) => {
+    if (err) {
+      console.error("Error logging out:", err);
+    }
+  });
+  req.session.destroy(session);
+  res.send("Goodbye!");
+};
+
+export const handleGoogleFailure = (req: Request, res: Response) => {
+  res.send("Failed to authenticate..");
+};
+
+
 
 // este funciona // src/controllers/authController.ts
 // import session from "express-session";
@@ -254,6 +265,10 @@ export const handleGoogleFailure = (req: Request, res: Response) => {
 // export const handleGoogleFailure = (req: Request, res: Response) => {
 //   res.send("Failed to authenticate..");
 // };
+
+
+
+
 
 // // este funciona pero no crea el usuario google src/controllers/authController.ts
 // import session from "express-session";
@@ -301,6 +316,12 @@ export const handleGoogleFailure = (req: Request, res: Response) => {
 // export const handleGoogleFailure = (req: Request, res: Response) => {
 //   res.send("Failed to authenticate..");
 // };
+
+
+
+
+
+
 
 // // esta es la ultima version propuesta por gpt que no funciona
 // // import passport from "passport";
@@ -419,6 +440,8 @@ export const handleGoogleFailure = (req: Request, res: Response) => {
 // //   res.send("Failed to authenticate..");
 // // };
 
+
+
 // // este funciona pero no crea el usuario google src/controllers/authController.ts
 // // import session from "express-session";
 // // import { Request, Response, NextFunction } from "express";
@@ -466,6 +489,8 @@ export const handleGoogleFailure = (req: Request, res: Response) => {
 // //   res.send("Failed to authenticate..");
 // // };
 
+
+
 // // este funciona // src/controllers/authController.ts
 // // import session from "express-session";
 // // import { Request, Response, NextFunction } from "express";
@@ -501,5 +526,6 @@ export const handleGoogleFailure = (req: Request, res: Response) => {
 // // export const handleGoogleFailure = (req: Request, res: Response) => {
 // //   res.send("Failed to authenticate..");
 // // };
+
 
 // well it seems that after all we have done is not possible to transform the src/utils/auth.js into a working typescript file. I think we should live my project as it was (with src/utils/auth.js) and think about another way to create the user after a succesful google-oauth authentification. How about if once the athentication process is done with a google account, I create a user of my chat through a post http request createUser? perhaps through the src/controllers/userController.ts

@@ -1,0 +1,54 @@
+esta es la que esta funcionando
+
+
+// localhost:8080/auth/google
+
+import express, { Request, Response } from "express";
+import * as authController from "../controllers/authController";
+import * as userController from "../controllers/userController";
+// import { AuthenticatedUser } from "../controllers/userController";
+
+const router = express.Router();
+
+router.get("/auth/google", authController.authenticateGoogle);
+// use this route to login: localhost:8080/auth/google
+
+
+router.get("/auth/google/callback", authController.handleGoogleCallback);
+
+
+// esta es la acutal, funciona
+// router.get("/auth/google/callback", authController.handleGoogleCallback);
+
+router.get("/protected", authController.handleProtectedRoute);
+
+router.get("/logout", authController.handleLogout);
+
+router.get("/auth/google/failure", authController.handleGoogleFailure);
+
+// Protected routes
+
+router.post("/api/createUser", authController.isLoggedIn, async (req: Request, res: Response) => {
+  try {
+    // Ensure the user is authenticated
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ error: "Not authenticated" });
+    }
+
+    // Use the createUser function from userController
+    await userController.createUser(req, res);
+  } catch (error) {
+    console.error("Error creating/updating user profile:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.get("/auth/printUserInfo", authController.printUserInfo);
+
+
+
+router.get("/chat", authController.isLoggedIn, userController.getChatPage); // Route to display chat page
+// router.get("/api/messages", authController.isLoggedIn, userController.getMessages); // Route to get messages
+// router.post("/api/messages", authController.isLoggedIn, userController.sendMessage); // Route to send a message
+
+export default router;

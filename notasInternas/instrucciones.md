@@ -22,3 +22,6 @@ To overcome this level you can add different options:
      Add the frontend customization you want.
      Create the frontend with some framework (React, Vue, Angular).
      Make the project using TypeScript.
+
+
+     User Creation: You mentioned using the userController to create a user. This can be done after successful authentication. The user data can be extracted from the authentication result (e.g., from the Google OAuth profile) and passed to the userController to create a user in your database.

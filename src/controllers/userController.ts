@@ -52,6 +52,20 @@ export const findUserByGoogleId = async (googleId: string) => {
   }
 };
 
+export const getAllUsers = async (req: Request, res: Response) => {
+  try {
+    // Retrieve all users from the database
+    const users = await User.find();
+
+    // Respond with the list of users
+    return res.status(200).json(users);
+  } catch (error) {
+    console.error("Error getting users:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+
 // Function to render the chat page
 export const getChatPage = (req: Request, res: Response) => {
   console.log(`route http://localhost:8080/chat has been called`);

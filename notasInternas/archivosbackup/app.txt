@@ -15,7 +15,7 @@ db();
 const app = express();
 
 // Enable CORS
-app.use(cors());
+app.use(cors({ origin: "*" }));
 
 // Parse JSON and URL-encoded bodies
 app.use(express.json());

@@ -1,40 +1,39 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 export interface IMessage extends Document {
+  user: mongoose.Types.ObjectId; // Reference to User model
   text: string;
-  user: string; // This should be the user's ID or a reference to the User model
-  date: Date;
+  createdAt: Date;
 }
 
 const messageSchema: Schema = new Schema({
+  user: { type: mongoose.Types.ObjectId, ref: "User", required: true }, // Reference to User model
   text: { type: String, required: true },
-  user: { type: Schema.Types.ObjectId, ref: "User", required: true },
-  date: { type: Date, default: Date.now },
+  createdAt: { type: Date, default: Date.now },
 });
 
-const Message = mongoose.model<IMessage>("Message", messageSchema);
-
-export default Message;
+export default mongoose.model<IMessage>("Message", messageSchema);
 
 
 
 
-
-// // src/models/messageModel.ts
 // import mongoose, { Schema, Document } from "mongoose";
+// import { IUser } from "./userModel"; // Import your user model interface
 
 // export interface IMessage extends Document {
+//   userId: IUser["_id"]; // Refers to the user who sent the message
 //   text: string;
-//   user: string; // This should be the user's ID or a reference to the User model
-//   date: Date;
+//   createdAt: Date;
 // }
 
 // const messageSchema: Schema = new Schema({
+//   userId: {
+//     type: Schema.Types.ObjectId,
+//     ref: "User", // Use the name of your user model as the ref
+//     required: true,
+//   },
 //   text: { type: String, required: true },
-//   user: { type: Schema.Types.ObjectId, ref: "User", required: true },
-//   date: { type: Date, default: Date.now }, // Automatically set to the current date/time
+//   createdAt: { type: Date, default: Date.now },
 // });
 
-// const Message = mongoose.model<IMessage>("Message", messageSchema);
-
-// export default Message;
+// export default mongoose.model<IMessage>("Message", messageSchema);

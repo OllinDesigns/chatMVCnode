@@ -11,7 +11,8 @@ router.get("/auth/google", authController.authenticateGoogle);
 
 router.get("/auth/google/callback", authController.handleGoogleCallback);
 
-router.get("/protected", authController.handleProtectedRoute);
+// router.get("/protected", authController.handleProtectedRoute);
+// esta ruta no esta siendo usada, sin embargo, la funcion handleProtectedRoute parece funcionar
 
 router.get("/logout", authController.handleLogout);
 
@@ -32,6 +33,8 @@ router.get("/auth/google/success", (req, res) => {
       .json({
         message: `Google authentication successful for ${displayName} (Google ID: ${googleId})`,
       });
+      // console.log("Session data:", req.session);
+
   } else {
     // Handle the case where the user's information is not available
     res.status(401).json({ error: "User not authenticated" });

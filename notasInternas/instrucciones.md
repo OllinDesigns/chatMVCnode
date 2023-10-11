@@ -25,3 +25,7 @@ To overcome this level you can add different options:
 
 
      User Creation: You mentioned using the userController to create a user. This can be done after successful authentication. The user data can be extracted from the authentication result (e.g., from the Google OAuth profile) and passed to the userController to create a user in your database.
+
+sesion: hacer la sesion con backup storage en el frontend. la session de cookies puede dar problemas
+
+la sesion se usa para autentificar el socket

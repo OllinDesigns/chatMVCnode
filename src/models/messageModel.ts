@@ -1,13 +1,15 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 export interface IMessage extends Document {
-  user: mongoose.Types.ObjectId; // Reference to User model
+  recipientUser: mongoose.Types.ObjectId; // Reference to User model
+  author: mongoose.Types.ObjectId; // Reference to User model
   text: string;
   createdAt: Date;
 }
 
 const messageSchema: Schema = new Schema({
-  user: { type: mongoose.Types.ObjectId, ref: "User", required: true }, // Reference to User model
+  recipientUser: { type: mongoose.Types.ObjectId, ref: "User", required: true }, // Reference to User model
+  author: { type: mongoose.Types.ObjectId, ref: "User", required: true }, // Reference to User model
   text: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
 });
@@ -17,21 +19,59 @@ export default mongoose.model<IMessage>("Message", messageSchema);
 
 
 
+
+
+
+
+
+// este modelo esta acoplado con una funcion que tiene logica de implementacion buscando un usuario auteticado, por eso no funciona. tenerlo en cuenta
 // import mongoose, { Schema, Document } from "mongoose";
-// import { IUser } from "./userModel"; // Import your user model interface
 
 // export interface IMessage extends Document {
-//   userId: IUser["_id"]; // Refers to the user who sent the message
+//   recipientUser: mongoose.Types.ObjectId; // Reference to User model
+//   text: string;
+//   createdAt: Date;
+//   author: mongoose.Types.ObjectId; // Reference to User model as author
+// }
+
+// const messageSchema: Schema = new Schema({
+//   recipientUser: { type: mongoose.Types.ObjectId, ref: "User", required: true }, // Reference to User model
+//   text: { type: String, required: true },
+//   createdAt: { type: Date, default: Date.now },
+//   author: { type: mongoose.Types.ObjectId, ref: "User", required: true }, // Reference to User model as author
+// });
+
+// export default mongoose.model<IMessage>("Message", messageSchema);
+
+// funciona, inserta el recipientId
+
+// import mongoose, { Schema, Document } from "mongoose";
+
+// export interface IMessage extends Document {
+//   recipientUser: mongoose.Types.ObjectId; // Reference to User model
 //   text: string;
 //   createdAt: Date;
 // }
 
 // const messageSchema: Schema = new Schema({
-//   userId: {
-//     type: Schema.Types.ObjectId,
-//     ref: "User", // Use the name of your user model as the ref
-//     required: true,
-//   },
+//   recipientUser: { type: mongoose.Types.ObjectId, ref: "User", required: true }, // Reference to User model
+//   text: { type: String, required: true },
+//   createdAt: { type: Date, default: Date.now },
+// });
+
+// export default mongoose.model<IMessage>("Message", messageSchema);
+
+// este funciona, version actual
+// import mongoose, { Schema, Document } from "mongoose";
+
+// export interface IMessage extends Document {
+//   user: mongoose.Types.ObjectId; // Reference to User model
+//   text: string;
+//   createdAt: Date;
+// }
+
+// const messageSchema: Schema = new Schema({
+//   user: { type: mongoose.Types.ObjectId, ref: "User", required: true }, // Reference to User model
 //   text: { type: String, required: true },
 //   createdAt: { type: Date, default: Date.now },
 // });

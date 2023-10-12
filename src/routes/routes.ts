@@ -46,7 +46,7 @@ router.get("/api/users", authController.isLoggedIn, userController.getAllUsers);
 // Route to send a message
 router.post(
   "/api/messages/:userId",
-  authController.isLoggedIn,
+  // authController.isLoggedIn,
   messageController.sendMessage
 );
 // this route doesnt work, perhaps because the message receptor user does not have an active session

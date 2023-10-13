@@ -1,0 +1,68 @@
+// esta funciona bien! guardarla!!!
+var socket = io.connect("http://localhost:8080", {
+  forceNew: true,
+});
+
+// Listen for the "messages" event (initial messages)
+socket.on("messages", function (data) {
+  render(data);
+});
+
+// Listen for the "new-message" event (real-time messages)
+socket.on("new-message", function (data) {
+  addMessageToUI(data);
+});
+
+function render(data) {
+  // Render initial messages when the page loads
+  data.forEach(function (message) {
+    addMessageToUI(message);
+  });
+}
+
+function addMessageToUI(data) {
+  // Add the new message to the UI
+  var messageHtml = `
+    <div>
+      <em>${data.recipientUser}</em>
+      <strong>${data.author}</strong>:
+      <em>${data.text}</em>
+    </div>
+  `;
+  document.getElementById("messages").innerHTML += messageHtml;
+}
+
+function addMessage(event) {
+  event.preventDefault();
+
+  var recipientUser = document.getElementById("recipientUser").value;
+  var author = document.getElementById("author").value;
+  var text = document.getElementById("text").value;
+
+  var messageData = {
+    recipientUser: recipientUser,
+    author: author,
+    text: text,
+  };
+
+  // Send the message data to the server (POST request)
+  fetch(`/api/messages/${recipientUser}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(messageData),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      // Handle the response if needed
+    })
+    .catch((error) => {
+      console.error("Error sending message:", error);
+    });
+
+  // Clear the input fields
+  document.getElementById("recipientUser").value = "";
+  document.getElementById("author").value = "";
+  document.getElementById("text").value = "";
+}

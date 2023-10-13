@@ -43,11 +43,16 @@ router.get("/api/users", authController.isLoggedIn, userController.getAllUsers);
 // resul of the route with non-authenticated user: doesnt work. the route is private now
 // route necessary for my project.
 
+// Add a new route to get all messages
+router.get("/api/messages", authController.isLoggedIn, messageController.getMessages);
+
+
 // Route to send a message
 router.post(
   "/api/messages/:userId",
-  // authController.isLoggedIn,
-  messageController.sendMessage
+  // authController.isLoggedIn, con este encendido no manda mensajes
+  messageController.sendMessage, 
+  
 );
 // this route doesnt work, perhaps because the message receptor user does not have an active session
 // route necessary for my project

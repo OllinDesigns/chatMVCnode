@@ -1,27 +1,25 @@
 import express from "express";
 import session from "express-session";
 import passport from "passport";
+import http from "http";
 import router from "./routes/routes";
 import { db } from "../database/db";
-import cors from "cors"
+import cors from "cors";
+import { initSocket } from "./sockets"
 
-
-// Import your authentication configuration (Passport.js setup)
 import "./utils/auth";
 
-// Initialize the database connection
 db();
 
 const app = express();
+const server = http.createServer(app);
+initSocket(server)
 
-// Enable CORS
+app.use(express.static("public"));
 app.use(cors({ origin: "*" }));
-
-// Parse JSON and URL-encoded bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Session management
 app.use(
   session({
     secret: "cats",
@@ -30,102 +28,206 @@ app.use(
   })
 );
 
-// Initialize Passport.js for authentication
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Use the defined routes
 app.use("/", router);
 
-app.listen(8080, () => console.log("Listening on port: 8080"));
+
+
+server.listen(8080, () => {
+  console.log("Listening on port: 8080");
+});
 
 
 
 
-// esta funciona, es antes de hacer la http request
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // import express from "express";
 // import session from "express-session";
 // import passport from "passport";
+// import http from "http";
+// import { Server } from "socket.io";
+// // import socketIo, { Server } from "socket.io";
 // import router from "./routes/routes";
 // import { db } from "../database/db";
-// import cors from "cors"
+// import cors from "cors";
 
-// require("./utils/auth.js");
-
-
+// import "./utils/auth";
 
 // db();
 
 // const app = express();
+// const server = http.createServer(app);
+// export const io = new Server(server);
+// // const io = socketIo(server);
 
-// app.use(cors());
+// app.use(express.static('public'));
 
+// app.use(cors({ origin: "*" }));
 // app.use(express.json());
 // app.use(express.urlencoded({ extended: false }));
 
-// app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+// app.use(
+//   session({
+//     secret: "cats",
+//     resave: false,
+//     saveUninitialized: true,
+//   })
+// );
+
 // app.use(passport.initialize());
 // app.use(passport.session());
 
 // app.use("/", router);
 
-// app.listen(8080, () => console.log("listening on port: 8080"));
+// const messages: any[] = [
+//   {
+//     // text: "Hola soy un mensaje",
+//     // author: "Carlos Azaustre"
+//     recipientUser: "6526e63b0133540688001e69",
+//     author: "6526e57b0133540688001e65",
+//     text: "gurruscus668",
+//   },
+// ]; // Replace 'any' with the actual type of your messages
 
+// // Send 'messages' event to the client when they connect
+// io.on("connection", (socket) => {
+//   console.log("A user connected with sockets");
+//   // en el servidor debes escuchar que se inicia la conexion
 
+//   // Send the 'messages' event to the connected client
+//   // emitir mensajes con un evento
+//   socket.emit('messages', messages);
 
+//   // Listen for 'new-message' event from the client
+//   // escuchar en el socket del servidor si ha llegado un nuevo mensaje
+//   // escuchar cunado recibimos un nuevo mensaje
+//   socket.on('new-message', (data: any) => { // Replace 'any' with the actual type of your data
+//     messages.push(data);
 
-// este funciona, es el sample inicial
-// import express, { Request, Response, NextFunction } from "express";
-// import session from "express-session";
-// import passport from "passport";
-// // import passport from "./auth"
-// // import auth from "./"
+//     // Broadcast 'messages' event to all connected clients
+//     io.sockets.emit('messages', messages);
+//   });
 
-// require("./utils/auth.js");
-
-// const app = express();
-
-// function isLoggedIn(req: Request, res: Response, next: NextFunction) {
-//   (req as Request).user ? next() : res.sendStatus(401);
-// }
-
-// app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
-// app.use(passport.initialize());
-// app.use(passport.session());
-
-// app.get("/", (req: Request, res: Response) => {
-//   res.send('<a href="/auth/google">Authenticate with Google</a>');
+//   // Handle WebSocket disconnect
+//   socket.on("disconnect", () => {
+//     console.log("User disconnected");
+//   });
 // });
 
-// app.get(
-//   "/auth/google",
-//   passport.authenticate("google", { scope: ["email", "profile"] })
-// );
+// // io.on("connection", (socket) => {
+// //   console.log("A user connected with sockets");
 
-// app.get(
-//   "/auth/google/callback",
-//   passport.authenticate("google", {
-//     successRedirect: "/protected",
-//     failureRedirect: "/auth/google/failure",
+// //   // Handle WebSocket events here
+
+// //   socket.on("disconnect", () => {
+// //     console.log("User disconnected");
+// //   });
+// // });
+
+// server.listen(8080, () => {
+//   console.log("Listening on port: 8080");
+// });
+
+// import express from "express";
+// import session from "express-session";
+// import passport from "passport";
+// import http from "http";
+// // import { Server } from "socket.io";
+// import router from "./routes/routes";
+// import { db } from "../database/db";
+// import cors from "cors";
+// // import Message from "./models/messageModel";
+// // import { IMessage } from "./models/messageModel";
+// import { initSocket } from "./sockets";
+
+// import "./utils/auth";
+
+// db();
+
+// const app = express();
+// export const server = http.createServer(app);
+// initSocket(server);
+
+// // export const io = new Server(server);
+
+// app.use(express.static('public'));
+// app.use(cors({ origin: "*" }));
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
+
+// app.use(
+//   session({
+//     secret: "cats",
+//     resave: false,
+//     saveUninitialized: true,
 //   })
 // );
 
-// app.get("/protected", isLoggedIn, (req: Request, res: Response) => {
-//   res.send(`Hello`);
+// app.use(passport.initialize());
+// app.use(passport.session());
+
+// app.use("/", router);
+
+// // // todo lo de sockets comentado por si funciona
+// // // Send 'messages' event to the client when they connect
+// // io.on("connection", (socket) => {
+// //   console.log("A user connected with sockets");
+
+// //   // Retrieve messages from the database
+// // // Retrieve messages from the database
+// // Message.find({})
+// //   .exec()
+// //   .then((messages) => {
+// //     // Emit the messages to the connected client
+// //     socket.emit('messages', messages);
+// //   })
+// //   .catch((err) => {
+// //     console.error("Error retrieving messages:", err);
+// //   });
+
+// // // Listen for 'new-message' event from the client
+// // socket.on('new-message', async (data: IMessage) => {
+// //   try {
+// //     const newMessage = new Message(data);
+// //     const savedMessage = await newMessage.save();
+
+// //     // Emit the newly saved message to all connected clients
+// //     io.sockets.emit('new-message', savedMessage);
+// //   } catch (err) {
+// //     console.error("Error saving message:", err);
+// //   }
+// // });
+
+// //   // Handle WebSocket disconnect
+// //   socket.on("disconnect", () => {
+// //     console.log("User disconnected");
+// //   });
+// // });
+
+// server.listen(8080, () => {
+//   console.log("Listening on port: 8080");
 // });
 
-// app.get("/logout", (req: Request, res: Response) => {
-//   req.logout((err: any) => {
-//     if (err) {
-//       console.error("Error logging out:", err);
-//     }
-//   });
-//   req.session.destroy(session);
-//   res.send("Goodbye!");
-// });
 
-// app.get("/auth/google/failure", (req: Request, res: Response) => {
-//   res.send("Failed to authenticate..");
-// });
 
-// app.listen(, () => console.log("listening on port: 8080"));

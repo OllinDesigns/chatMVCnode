@@ -11,7 +11,38 @@
 
 
     <br/>
-    <form onsubmit="return addMessage(event)">
+    <form onsubmit="return sendMessage(event)">
+      <label for="recipientUser">Recipient User:</label>
+      <br>
+      <input type="text" id="recipientUser" placeholder="User ID">
+      <br>
+      <label for="text">Message:</label>
+      <br>
+      <input type="text" id="text" placeholder="Write your message">
+      <input type="submit" value="Send">
+    </form>
+    
+ 
+
+    <div id="messages"></div>
+  </body>
+</html>
+
+<!-- esta tiene el author field
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Chat with sockets</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="main.js"></script> 
+  </head>
+  <body>
+    <h1>Chat of the cat </h1>
+
+
+    <br/>
+    <form onsubmit="return sendMessage(event)">
       <label for="recipientUser">Recipient User:</label>
       <br>
       <input type="text" id="recipientUser" placeholder="User ID">
@@ -31,7 +62,7 @@
     <div id="messages"></div>
   </body>
 </html>
-
+ -->
 
 
 

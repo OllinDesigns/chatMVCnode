@@ -34,21 +34,20 @@ function addMessageToUI(data) {
   document.getElementById("messages").innerHTML += messageHtml;
 }
 
-function addMessage(event) {
+
+function sendMessage(event) {
   event.preventDefault();
 
   var recipientUser = document.getElementById("recipientUser").value;
-  var author = document.getElementById("author").value;
   var text = document.getElementById("text").value;
 
   var messageData = {
     recipientUser: recipientUser,
-    author: author,
     text: text,
   };
 
-  // Send the message data to the server (POST request)
-  fetch(`/api/messages/${recipientUser}`, {
+  // Send the message data to the server using the sendMessage1 function
+  fetch(`/api/messages1/${recipientUser}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -65,12 +64,52 @@ function addMessage(event) {
 
   // Clear the input fields
   document.getElementById("recipientUser").value = "";
-  document.getElementById("author").value = "";
   document.getElementById("text").value = "";
 }
 
+// Replace the event handler for the form submission
+document.querySelector("form").onsubmit = sendMessage;
 
 
+
+
+// esta era la funcion donde tocaba anadir el author manualmente
+
+// en esta me toca insertar manualmente el author
+// function addMessage(event) {
+//   event.preventDefault();
+
+//   var recipientUser = document.getElementById("recipientUser").value;
+//   var author = document.getElementById("author").value;
+//   var text = document.getElementById("text").value;
+
+//   var messageData = {
+//     recipientUser: recipientUser,
+//     author: author,
+//     text: text,
+//   };
+
+//   // Send the message data to the server (POST request)
+//   fetch(`/api/messages/${recipientUser}`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(messageData),
+//   })
+//     .then((response) => response.json())
+//     .then((data) => {
+//       // Handle the response if needed
+//     })
+//     .catch((error) => {
+//       console.error("Error sending message:", error);
+//     });
+
+//   // Clear the input fields
+//   document.getElementById("recipientUser").value = "";
+//   document.getElementById("author").value = "";
+//   document.getElementById("text").value = "";
+// }
 
 
 // este es el sel simulacro, funciona bien

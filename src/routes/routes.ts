@@ -48,16 +48,26 @@ router.get("/api/messages", authController.isLoggedIn, messageController.getMess
 
 
 // Route to send a message
+// router.post(
+//   "/api/messages/:userId",
+//   authController.isLoggedIn,
+//   messageController.sendMessage, 
+  
+// );
+
+
+// funciona bien pero tiene un comportamiento extrano. hago el google logout. la pagina index.html seguira emitiendo mensajes con el usuario deslogueado, debo reiniciar la app para que solo usuarios logueados puedan mandar mensajes
 router.post(
-  "/api/messages/:userId",
-  // authController.isLoggedIn, con este encendido no manda mensajes
-  messageController.sendMessage, 
+  "/api/messages1/:userId",
+  authController.isLoggedIn,
+  messageController.sendMessage1, 
   
 );
 // this route doesnt work, perhaps because the message receptor user does not have an active session
 // route necessary for my project
 
 export default router;
+
 
 
 

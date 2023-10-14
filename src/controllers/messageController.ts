@@ -1,20 +1,27 @@
 import { Request, Response } from "express";
 import Message from "../models/messageModel";
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
 import { IUser } from "../models/userModel";
 import { getIo } from "../sockets";
 
-export const sendMessage = async (req: Request, res: Response) => {
-  console.log("sendMessage function is called");
+
+
+export const sendMessage1 = async (req: Request, res: Response) => {
+  console.log("sendMessage1 function is called");
   try {
     const recipientUserId = req.params.userId;
-    const { text, author } = req.body; // Include 'author' in the destructuring
+    const { text } = req.body; // Remove author from the destructuring
+
     const user = req.user as IUser | undefined; // Use IUser and allow undefined
 
-    // Create a new message
+    if (!user) {
+      return res.status(401).json({ error: "User not authenticated" });
+    }
+
+    // Create a new message with the authenticated user as the author
     const newMessage = new Message({
-      recipientUser: recipientUserId, // Use the recipientUserId from the route
-      author: user ? user._id : new mongoose.Types.ObjectId(author), // Allow using authenticated user if available
+      recipientUser: recipientUserId,
+      author: user._id, // Automatically set the authenticated user's ID
       text,
     });
 
@@ -32,6 +39,7 @@ export const sendMessage = async (req: Request, res: Response) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+
 
 export const getMessages = async (req: Request, res: Response) => {
   try {
@@ -56,8 +64,35 @@ export const getMessages = async (req: Request, res: Response) => {
 
 
 
+// esta funciona, crea el mensaje pero toca anadir el author manualmente
+// export const sendMessage = async (req: Request, res: Response) => {
+//   console.log("sendMessage function is called");
+//   try {
+//     const recipientUserId = req.params.userId;
+//     const { text, author } = req.body; // Include 'author' in the destructuring
+//     const user = req.user as IUser | undefined; // Use IUser and allow undefined
 
+//     // Create a new message
+//     const newMessage = new Message({
+//       recipientUser: recipientUserId, // Use the recipientUserId from the route
+//       author: user ? user._id : new mongoose.Types.ObjectId(author), // Allow using authenticated user if available
+//       text,
+//     });
 
+//     console.log("New message:", newMessage);
+
+//     await newMessage.save();
+
+//     const io = getIo();
+
+//     io.emit("new-message", newMessage);
+
+//     return res.status(201).json(newMessage);
+//   } catch (error) {
+//     console.error("Error sending a message:", error);
+//     return res.status(500).json({ error: "Internal server error" });
+//   }
+// };
 
 
 

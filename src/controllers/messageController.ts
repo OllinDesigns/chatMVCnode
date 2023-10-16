@@ -1,9 +1,7 @@
 import { Request, Response } from "express";
 import Message from "../models/messageModel";
-// import mongoose from "mongoose";
 import { IUser } from "../models/userModel";
 import { getIo } from "../sockets";
-
 
 
 export const sendMessage1 = async (req: Request, res: Response) => {
@@ -41,6 +39,9 @@ export const sendMessage1 = async (req: Request, res: Response) => {
 };
 
 
+
+
+
 export const getMessages = async (req: Request, res: Response) => {
   try {
     // Retrieve all messages from the database
@@ -57,6 +58,60 @@ export const getMessages = async (req: Request, res: Response) => {
 
 
 
+// export const sendMessageToChatroom = async (req: Request, res: Response) => {
+//   console.log("sendMessageToChatroom function is called");
+//   try {
+//     const recipientUserId = req.params.userId;
+//     const { text } = req.body;
+
+//     const user = req.user as IUser | undefined;
+
+//     if (!user) {
+//       return res.status(401).json({ error: "User not authenticated" });
+//     }
+
+//     // Create a new chat message with the authenticated user as the author
+//     // const newChatMessage: IChatMessage = {
+//     //   recipientUser: new mongoose.Types.ObjectId(recipientUserId),
+//     //   author: user._id,
+//     //   text,
+//     //   createdAt: new Date(),
+//     // };
+
+//     const newChatMessage = new Message({
+//       recipientUser: recipientUserId,
+//       author: user._id, // Automatically set the authenticated user's ID
+//       text,
+//     });
+
+//     console.log("New chat message:", newChatMessage);
+
+//     // Find the chat room by recipientUserId, create it if it doesn't exist
+//     let chatRoom = await chatRoomModel.findOne({ recipientUserId });
+
+//     if (!chatRoom) {
+//       chatRoom = new chatRoomModel({
+//         recipientUserId,
+//         messages: [],
+//       });
+//     }
+
+//     // Push the new chat message to the chat room's messages array
+//     chatRoom.messages.push(newChatMessage);
+
+//     // Save the chat room to the database
+//     await chatRoom.save();
+
+//     // Broadcast the new chat message to all connected clients using sockets
+//     const io = getIo();
+//     io.emit("new-chat-message", newChatMessage);
+
+//     return res.status(201).json(newChatMessage);
+//   } catch (error) {
+//     console.error("Error sending a chat message:", error);
+//     return res.status(500).json({ error: "Internal server error" });
+//   }
+// };
 
 
 

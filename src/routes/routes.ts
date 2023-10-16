@@ -4,6 +4,7 @@ import express from "express";
 import * as authController from "../controllers/authController";
 import * as userController from "../controllers/userController";
 import * as messageController from "../controllers/messageController";
+import * as sendMsgToCharoom from "../controllers/sendMsgToCharoom"
 
 const router = express.Router();
 
@@ -63,6 +64,24 @@ router.post(
   messageController.sendMessage1, 
   
 );
+
+
+
+router.post(
+  "/api/chatroom/messages/:userId",
+  authController.isLoggedIn,
+  sendMsgToCharoom.sendMessageToChatRoom
+);
+
+
+// this route doesnt work, perhaps because the message receptor user does not have an active session
+// route necessary for my project
+
+// router.post(
+//   "/api/chatroom/messages/:userId",
+//   authController.isLoggedIn, // Ensure the user is authenticated
+//   sendMessageToChatroom2.sendMessageToChatroom, // Use the sendMessageToChatroom function
+// );
 // this route doesnt work, perhaps because the message receptor user does not have an active session
 // route necessary for my project
 

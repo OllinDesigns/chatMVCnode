@@ -35,6 +35,8 @@ export function initSocket(server: http.Server): void {
       }
     });
 
+
+
     // Handle WebSocket disconnect
     socket.on("disconnect", () => {
       console.log("User disconnected");
@@ -45,3 +47,41 @@ export function initSocket(server: http.Server): void {
 export function getIo(): Server {
   return io;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // nuevo intento, no funciona
+// socket.on("new-ChatMessage", async (data: any) => {
+//   try {
+//     const newChatMessage = new Message(data);
+//     const savedMessage = await newChatMessage.save();
+
+//     // Emit the newly saved message to all connected clients
+//     io.sockets.emit("new-Chatmessage", savedMessage);
+//   } catch (err) {
+//     console.error("Error saving message:", err);
+//   }
+// });

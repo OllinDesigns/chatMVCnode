@@ -4,7 +4,7 @@ import express from "express";
 import * as authController from "../controllers/authController";
 import * as userController from "../controllers/userController";
 import * as messageController from "../controllers/messageController";
-import * as sendMsgToCharoom from "../controllers/sendMsgToCharoom"
+// import * as sendMsgToCharoom from "../controllers/sendMsgToCharoom"
 
 const router = express.Router();
 
@@ -57,21 +57,29 @@ router.get("/api/messages", authController.isLoggedIn, messageController.getMess
 // );
 
 
-// funciona bien pero tiene un comportamiento extrano. hago el google logout. la pagina index.html seguira emitiendo mensajes con el usuario deslogueado, debo reiniciar la app para que solo usuarios logueados puedan mandar mensajes
+// // NO BORRAR, ESTA ES LA DE PRIVATEMESSAGE
+// router.post(
+//   "/api/messages1/:userId",
+//   authController.isLoggedIn,
+//   messageController.sendMessage1, 
+  
+// );
+
+
+//l la nueva
 router.post(
-  "/api/messages1/:userId",
+  "/api/messagesToChatroom",
   authController.isLoggedIn,
   messageController.sendMessage1, 
   
 );
 
 
-
-router.post(
-  "/api/chatroom/messages/:userId",
-  authController.isLoggedIn,
-  sendMsgToCharoom.sendMessageToChatRoom
-);
+// router.post(
+//   "/api/chatroom/messages/:userId",
+//   authController.isLoggedIn,
+//   sendMsgToCharoom.sendMessageToChatRoom
+// );
 
 
 // this route doesnt work, perhaps because the message receptor user does not have an active session

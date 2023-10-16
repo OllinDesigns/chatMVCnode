@@ -3,10 +3,12 @@ var socket = io.connect("http://localhost:8080", {
   forceNew: true,
 });
 
-// Listen for the "new-message" event (real-time messages)
-socket.on("new-message", function (data) {
+
+
+socket.on("new-ChatMessage", function (data) {
   addMessageToUI(data);
 });
+
 
 function addMessageToUI(data) {
   // Add the new message to the UI
@@ -66,8 +68,10 @@ document.querySelector("form").onsubmit = sendMessageToChatroom; // Replace the 
 
 
 
-
-
+// Listen for the "new-message" event (real-time messages)
+// socket.on("new-message", function (data) {
+//   addMessageToUI(data);
+// });
 
 
 

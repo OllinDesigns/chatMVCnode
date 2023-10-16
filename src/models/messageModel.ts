@@ -1,14 +1,12 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 export interface IMessage extends Document {
-  recipientUser: mongoose.Types.ObjectId; // Reference to User model
   author: mongoose.Types.ObjectId; // Reference to User model
   text: string;
   createdAt: Date;
 }
 
 const messageSchema: Schema = new Schema({
-  recipientUser: { type: mongoose.Types.ObjectId, ref: "User", required: true }, // Reference to User model
   author: { type: mongoose.Types.ObjectId, ref: "User", required: true }, // Reference to User model
   text: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
@@ -18,6 +16,27 @@ export default mongoose.model<IMessage>("Message", messageSchema);
 
 
 
+
+
+
+// GUARDAR BIEN ESTE MODELO, SIRVE PARA REALTIME MESSAGES
+// import mongoose, { Schema, Document } from "mongoose";
+
+// export interface IMessage extends Document {
+//   recipientUser: mongoose.Types.ObjectId; // Reference to User model
+//   author: mongoose.Types.ObjectId; // Reference to User model
+//   text: string;
+//   createdAt: Date;
+// }
+
+// const messageSchema: Schema = new Schema({
+//   recipientUser: { type: mongoose.Types.ObjectId, ref: "User", required: true }, // Reference to User model
+//   author: { type: mongoose.Types.ObjectId, ref: "User", required: true }, // Reference to User model
+//   text: { type: String, required: true },
+//   createdAt: { type: Date, default: Date.now },
+// });
+
+// export default mongoose.model<IMessage>("Message", messageSchema);
 
 
 

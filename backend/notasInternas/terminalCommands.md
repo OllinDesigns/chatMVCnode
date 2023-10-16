@@ -67,3 +67,6 @@ tree -I 'node_modules|notasInternas|config|seeders|dist'
 
 npx jest --clearCache
 
+# chek what is running in a port
+
+lsof -i :3000

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import Message from "../models/messageModel";
 import { IUser } from "../models/userModel";
-import { getIo } from "../sockets";
+// import { getIo } from "../sockets";
 
 
 export const sendMessage1 = async (req: Request, res: Response) => {
@@ -25,9 +25,9 @@ export const sendMessage1 = async (req: Request, res: Response) => {
 
     await newMessage.save();
 
-    const io = getIo();
+    // const io = getIo();
 
-    io.emit("new-message", newMessage);
+    // io.emit("new-message", newMessage);
 
     return res.status(201).json(newMessage);
   } catch (error) {

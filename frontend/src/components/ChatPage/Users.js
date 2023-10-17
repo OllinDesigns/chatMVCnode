@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 // import {
 //     Menu,
 //     MenuDivider,
 //     MenuItem,
 //     MenuList,
 //   } from "@chakra-ui/menu";
-import { Box } from "@chakra-ui/layout";
+import { Box, Text } from "@chakra-ui/layout";
 
 const Users = () => {
-  const history = useHistory();
+  // const history = useHistory();
 
-  const logoutHandler = () => {
-    localStorage.removeItem("userInfo");
-    history.push("/");
-  };
+  // const logoutHandler = () => {
+  //   localStorage.removeItem("userInfo");
+  //   history.push("/");
+  // };
 
   const [users, setUsers] = useState([]);
 
@@ -31,24 +31,57 @@ const Users = () => {
 
   return (
     <div>
-      the Users show more things here
-      <Box bg="tomato" w="40%" p={4} color="white">
-        <div>
-          {users.map((chat) => (
-            <div key={chat._id}>
-              {Object.keys(chat).map((key) => {
-                if (key !== "__v") {
-                  return (
-                    <div key={key}>
-                      <strong>{key}:</strong> {chat[key]}
-                    </div>
-                  );
-                }
-                return null;
-              })}
+      <Box
+      margin="12px"
+      marginLeft="150px"
+      marginRight="150px"
+      padding="10px"
+      border="3px solid #42357b"
+      background="#0d1521"
+      color="#42357b"
+      textAlign="center"
+      borderRadius="20px"
+      width="38%"
+      >
+
+<Text fontFamily="Montserrat" fontSize="1.5em" fontWeight="bolder"> Registered users </Text>
+      </Box>
+      <Box margin="12px"
+      marginLeft="150px"
+      marginRight="150px"
+      padding="5px"
+      border="5px solid #42357b"
+      background="#0d1521"
+      color="black"
+      borderRadius="20px"
+      width="38%">
+
+<div>
+  {users.map((chat) => (
+    <div key={chat._id}>
+      <Box margin="5px"
+      padding="10px"
+      border="3px solid #42357b"
+      background="#6b5ab8"
+      // background="#0d1521"
+      color="black"
+      borderRadius="20px"
+      width="80%">
+      {Object.keys(chat).map((key) => {
+        // Check if the key is not 'googleId' or 'messages'
+        if (key !== '__v' && key !== 'googleId' && key !== 'messages') {
+          return (
+            <div key={key}>
+              <strong>{key}:</strong> {chat[key]}
             </div>
-          ))}
-        </div>
+          );
+        }
+        return null;
+      })}
+      </Box>
+    </div>
+  ))}
+</div>
       </Box>
     </div>
   );

@@ -90,7 +90,8 @@ export const handleGoogleCallback = (
 
       console.log("User added to session:", req.session.user);
       console.log("Session data:", req.session);
-      return res.redirect("/auth/google/success");
+      // return res.redirect("/auth/google/success");
+      return res.redirect("http://localhost:3000/chats");
     } catch (error) {
       console.error("Error during authentication:", error);
       return res.redirect("/auth/google/failure");

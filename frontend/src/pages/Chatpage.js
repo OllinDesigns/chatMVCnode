@@ -8,22 +8,16 @@ import SideDrawer from "./SideDrawer";
 
 const Chatpage = () => {
 
-//   const a = 5
-//   const b = 5
-// const { user } = a + b;
+
 
   return (
     <div style={{ width: "100%" }}>
       <Box>{ <SideDrawer/>}</Box>
       
-      <Box d="flex"  bg="rgba(0, 0, 255, 0.2)" justifyContent="space-between" w="100%" h="91.5vh" p="10px">
-        <Box placement="left">
+      <Box d="flex"  bg="rgba(9, 13, 19, 0.5)" justifyContent="space-between" w="100%" h="91.5vh" >
         <Users />
-        </Box>
         
-        <Box placement="right">
         <ChatBox />
-        </Box>
 
         
       </Box>

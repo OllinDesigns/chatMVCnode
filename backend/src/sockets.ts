@@ -1,52 +1,52 @@
-import { Server } from "socket.io";
-import http from "http";
-import Message from "./models/messageModel";
+// import { Server } from "socket.io";
+// import http from "http";
+// import Message from "./models/messageModel";
 
-let io: Server;
+// let io: Server;
 
-export function initSocket(server: http.Server): void {
-  io = new Server(server);
+// export function initSocket(server: http.Server): void {
+//   io = new Server(server);
 
-  io.on("connection", (socket) => {
-    console.log("A user connected with sockets");
+//   io.on("connection", (socket) => {
+//     console.log("A user connected with sockets");
   
-    // Retrieve messages from the database
-    // Retrieve messages from the database
-    Message.find({})
-      .exec()
-      .then((messages) => {
-        // Emit the messages to the connected client
-        socket.emit("messages", messages);
-      })
-      .catch((err) => {
-        console.error("Error retrieving messages:", err);
-      });
+//     // Retrieve messages from the database
+//     // Retrieve messages from the database
+//     Message.find({})
+//       .exec()
+//       .then((messages) => {
+//         // Emit the messages to the connected client
+//         socket.emit("messages", messages);
+//       })
+//       .catch((err) => {
+//         console.error("Error retrieving messages:", err);
+//       });
       
-    // Listen for 'new-message' event from the client
-    socket.on("new-message", async (data: any) => {
-      try {
-        const newMessage = new Message(data);
-        const savedMessage = await newMessage.save();
+//     // Listen for 'new-message' event from the client
+//     socket.on("new-message", async (data: any) => {
+//       try {
+//         const newMessage = new Message(data);
+//         const savedMessage = await newMessage.save();
   
-        // Emit the newly saved message to all connected clients
-        io.sockets.emit("new-message", savedMessage);
-      } catch (err) {
-        console.error("Error saving message:", err);
-      }
-    });
+//         // Emit the newly saved message to all connected clients
+//         io.sockets.emit("new-message", savedMessage);
+//       } catch (err) {
+//         console.error("Error saving message:", err);
+//       }
+//     });
 
 
 
-    // Handle WebSocket disconnect
-    socket.on("disconnect", () => {
-      console.log("User disconnected");
-    });
-  });
-}
+//     // Handle WebSocket disconnect
+//     socket.on("disconnect", () => {
+//       console.log("User disconnected");
+//     });
+//   });
+// }
 
-export function getIo(): Server {
-  return io;
-}
+// export function getIo(): Server {
+//   return io;
+// }
 
 
 

@@ -70,3 +70,4 @@ npx jest --clearCache
 # chek what is running in a port
 
 lsof -i :3000
+

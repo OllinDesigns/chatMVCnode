@@ -1,0 +1,38 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+// import { useHistory } from "react-router-dom";
+import { Box } from "@chakra-ui/layout";
+
+const ChatBox = () => {
+  const [messages, setMessages] = useState([]);
+
+  const fetchMessages = async () => {
+    const { data } = await axios.get("/api/messages");
+
+    setMessages(data);
+  };
+
+  useEffect(() => {
+    fetchMessages();
+  });
+
+  return (
+    <div>
+      My Chats does not shwo anything
+      <Box bg="pink">
+        {messages.map((chat) => (
+          <div key={chat._id}>
+            <div>
+              <strong>Author:</strong> {chat.author}
+            </div>
+            <div>
+              <strong>Text:</strong> {chat.text}
+            </div>
+          </div>
+        ))}
+      </Box>
+    </div>
+  );
+};
+
+export default ChatBox;

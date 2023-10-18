@@ -1,12 +1,10 @@
 import React from "react";
 import { Box, Text } from "@chakra-ui/layout";
 
-
 function SideDrawer() {
-
   return (
     <div>
-        <Box
+      <Box
         margin="22px"
         marginLeft="150px"
         marginRight="150px"
@@ -16,11 +14,13 @@ function SideDrawer() {
         color="#42357b"
         textAlign="center"
         borderRadius="20px"
-        >
-            <Text fontFamily="Montserrat" fontSize="3em"> Let's Chat! </Text>
-        </Box>
+      >
+        <Text fontFamily="Montserrat" fontSize="3em">
+          {" "}
+          Let's Chat!{" "}
+        </Text>
+      </Box>
     </div>
-    
   );
 }
 

@@ -65,7 +65,6 @@ export const getAllUsers = async (req: Request, res: Response) => {
   }
 };
 
-
 // Function to render the chat page
 export const getChatPage = (req: Request, res: Response) => {
   console.log(`route http://localhost:8080/chat has been called`);
@@ -74,4 +73,3 @@ export const getChatPage = (req: Request, res: Response) => {
       "Router handling successfully http://localhost:8080/chat. This will display the chat.",
   });
 };
-

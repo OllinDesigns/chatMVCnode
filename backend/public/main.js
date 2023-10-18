@@ -1,69 +1,69 @@
-var socket = io.connect("http://localhost:8080", {
-  forceNew: true,
-});
+// var socket = io.connect("http://localhost:8080", {
+//   forceNew: true,
+// });
 
-// Listen for the "messages" event (initial messages)
-socket.on("messages", function (data) {
-  render(data);
-});
+// // Listen for the "messages" event (initial messages)
+// socket.on("messages", function (data) {
+//   render(data);
+// });
 
-// Listen for the "new-message" event (real-time messages)
-socket.on("new-message", function (data) {
-  addMessageToUI(data);
-});
+// // Listen for the "new-message" event (real-time messages)
+// socket.on("new-message", function (data) {
+//   addMessageToUI(data);
+// });
 
-function render(data) {
-  // Render initial messages when the page loads
-  data.forEach(function (message) {
-    addMessageToUI(message);
-  });
-}
+// function render(data) {
+//   // Render initial messages when the page loads
+//   data.forEach(function (message) {
+//     addMessageToUI(message);
+//   });
+// }
 
-function addMessageToUI(data) {
-  // Add the new message to the UI
-  var messageHtml = `
-  <div>
-    <strong>author: ${data.author}</strong>
-    <br>
-    <em>Message: ${data.text}</em>
-    <br><br>
-  </div>
-  `;
-  document.getElementById("messages").innerHTML += messageHtml;
-}
+// function addMessageToUI(data) {
+//   // Add the new message to the UI
+//   var messageHtml = `
+//   <div>
+//     <strong>author: ${data.author}</strong>
+//     <br>
+//     <em>Message: ${data.text}</em>
+//     <br><br>
+//   </div>
+//   `;
+//   document.getElementById("messages").innerHTML += messageHtml;
+// }
 
-function sendMessage(event) {
-  event.preventDefault();
+// function sendMessage(event) {
+//   event.preventDefault();
 
-  var text = document.getElementById("text").value;
+//   var text = document.getElementById("text").value;
 
-  var messageData = {
-    text: text, // Remove recipientUser
-  };
+//   var messageData = {
+//     text: text, // Remove recipientUser
+//   };
 
-  // Send the message data to the server using the sendMessage1 function
-  // fetch("/api/messages1", { // Update the URL
-    fetch("/api/messagesToChatroom", { // Update the URL
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(messageData),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      // Handle the response if needed
-    })
-    .catch((error) => {
-      console.error("Error sending message:", error);
-    });
+//   // Send the message data to the server using the sendMessage1 function
+//   // fetch("/api/messages1", { // Update the URL
+//     fetch("/api/messagesToChatroom", { // Update the URL
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(messageData),
+//   })
+//     .then((response) => response.json())
+//     .then((data) => {
+//       // Handle the response if needed
+//     })
+//     .catch((error) => {
+//       console.error("Error sending message:", error);
+//     });
 
-  // Clear the input fields
-  document.getElementById("text").value = ""; // Remove recipientUser
-}
+//   // Clear the input fields
+//   document.getElementById("text").value = ""; // Remove recipientUser
+// }
 
-// Replace the event handler for the form submission
-document.querySelector("form").onsubmit = sendMessage;
+// // Replace the event handler for the form submission
+// document.querySelector("form").onsubmit = sendMessage;
 
 
 // ESTA FUNCIONA PARA PRIVATEMESSAGES

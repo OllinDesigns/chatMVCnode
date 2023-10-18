@@ -23,15 +23,12 @@ router.get("/auth/google/success", authController.handleGoogleSuccess);
 // resul of the route with non-authenticated user: does not work: error	"User not authenticated"
 // route necessary for my project. Is logic and implementation has to be changed
 
-
 router.get("/logout", authController.handleLogout);
 // resul of the route with authenticated user: it works: goodbye!
 // resul of the route with non-authenticated user: it works. it says goodbye
 // This route fails in its implementation. I must define a logout function that actually logs out.
 
-
 // PROTECTED ROUTES
-
 
 router.get("/chat", authController.isLoggedIn, userController.getChatPage); // Route to display chat page
 // resul of the route with authenticated user: it works!, it displays the chat page
@@ -45,67 +42,24 @@ router.get("/api/users", authController.isLoggedIn, userController.getAllUsers);
 // route necessary for my project.
 
 // Add a new route to get all messages
-router.get("/api/messages", authController.isLoggedIn, messageController.getMessages);
-
-
-// Route to send a message
-// router.post(
-//   "/api/messages/:userId",
-//   authController.isLoggedIn,
-//   messageController.sendMessage, 
-  
-// );
-
+router.get(
+  "/api/messages",
+  authController.isLoggedIn,
+  messageController.getMessages
+);
 
 // // NO BORRAR, ESTA ES LA DE PRIVATEMESSAGE
 // router.post(
 //   "/api/messages1/:userId",
 //   authController.isLoggedIn,
-//   messageController.sendMessage1, 
-  
+//   messageController.sendMessage1,
+
 // );
 
-
-//l la nueva
 router.post(
   "/api/messagesToChatroom",
   authController.isLoggedIn,
-  messageController.sendMessage1, 
-  
+  messageController.sendMessage1
 );
 
-
-// router.post(
-//   "/api/chatroom/messages/:userId",
-//   authController.isLoggedIn,
-//   sendMsgToCharoom.sendMessageToChatRoom
-// );
-
-
-// this route doesnt work, perhaps because the message receptor user does not have an active session
-// route necessary for my project
-
-// router.post(
-//   "/api/chatroom/messages/:userId",
-//   authController.isLoggedIn, // Ensure the user is authenticated
-//   sendMessageToChatroom2.sendMessageToChatroom, // Use the sendMessageToChatroom function
-// );
-// this route doesnt work, perhaps because the message receptor user does not have an active session
-// route necessary for my project
-
 export default router;
-
-
-
-
-
-
-
-
-
-
-
-
-// a considerar
-
-// router.get("/api/messages", authController.isLoggedIn, userController.getMessages); // Route to get messages

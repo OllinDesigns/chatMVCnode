@@ -6,7 +6,6 @@ import { IUser } from "src/models/userModel";
 interface AuthenticatedUser {
   googleId: string;
   displayName: string;
-  // Add other properties as needed
 }
 
 declare module "express-session" {
@@ -15,7 +14,6 @@ declare module "express-session" {
   }
 }
 
-// Middleware to check if the user is authenticated
 export const isLoggedIn = (req: Request, res: Response, next: NextFunction) => {
   if (req.isAuthenticated()) {
     return next();
@@ -34,51 +32,42 @@ export const handleGoogleCallback = (
 ) => {
   passport.authenticate("google", async (err: any, user: IUser, info: any) => {
     if (err) {
-      // Handle authentication error
       console.error("Authentication error:", err);
       return res.redirect("/auth/google/failure");
     }
 
     if (!user) {
-      // Handle failed authentication
       console.error("Authentication failed.");
       return res.redirect("/auth/google/failure");
     }
 
     try {
-      // Check if the user already exists in the database
       const existingUser = await userController.findUserByGoogleId(
         user.googleId
       );
 
       if (!existingUser) {
-        // User doesn't exist, insert them into the database
         const createdUser = await userController.createUserFromOAuth({
           googleId: user.googleId,
           displayName: user.displayName,
         });
 
-        // Store the user data in the session
         req.session.user = {
           googleId: createdUser.googleId,
           displayName: createdUser.displayName,
-          // Add other properties as needed
         };
 
         console.log("User added to MongoDB:", createdUser.displayName);
       } else {
-        // The user exists, open a passport session for them
         req.login(existingUser, (loginErr) => {
           if (loginErr) {
             console.error("Error opening passport session:", loginErr);
             return res.redirect("/auth/google/failure");
           }
 
-          // Store the user data in the session
           req.session.user = {
             googleId: existingUser.googleId,
             displayName: existingUser.displayName,
-            // Add other properties as needed
           };
 
           console.log(
@@ -90,7 +79,6 @@ export const handleGoogleCallback = (
 
       console.log("User added to session:", req.session.user);
       console.log("Session data:", req.session);
-      // return res.redirect("/auth/google/success");
       return res.redirect("http://localhost:3000/chats");
     } catch (error) {
       console.error("Error during authentication:", error);
@@ -99,28 +87,8 @@ export const handleGoogleCallback = (
   })(req, res, next);
 };
 
-export const handleGoogleSuccess = (req: Request, res: Response) => {
-  // Check if the user is authenticated and their information is in the session
-  if (req.session.user) {
-    const { googleId, displayName } = req.session.user;
-
-    // Include the user's information in the success message
-    res.status(200).json({
-      message: `Google authentication successful for ${displayName} (Google ID: ${googleId})
-      
-      Go to http://localhost:8080/index.html to enter chat
-      `,
-    });
-  } else {
-    // Handle the case where the user's information is not available
-    res.status(401).json({ error: "User not authenticated" });
-  }
-};
-
-// esta no funciona bien, solo llega hasta el primer console.log
 export const handleLogout = (req: Request, res: Response) => {
   console.log("Logout route accessed");
-  // Logout the user and destroy the session
   req.logout((err: any) => {
     if (err) {
       console.error("Error logging out:", err);
@@ -132,5 +100,4 @@ export const handleLogout = (req: Request, res: Response) => {
   });
 
   res.send("Goodbye!");
-  // console.log(`user has been logged out`)
 };

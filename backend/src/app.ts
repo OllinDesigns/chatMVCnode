@@ -5,10 +5,7 @@ import http from "http";
 import router from "./routes/routes";
 import { db } from "../database/db";
 import cors from "cors";
-// import { initSocket } from "./sockets"
-// import Message from "./models/messageModel"
-
-import { Server } from "socket.io"; // del video hindu
+import { Server } from "socket.io";
 
 import "./utils/auth";
 
@@ -16,7 +13,6 @@ db();
 
 const app = express();
 const server = http.createServer(app);
-// initSocket(server)
 
 app.use(express.static("public"));
 app.use(cors({ origin: "*" }));
@@ -40,7 +36,6 @@ const io = new Server(server, {
   pingTimeout: 60000,
   cors: {
     origin: "http://localhost:3000",
-    // credentials: true,
   },
 });
 
@@ -48,10 +43,8 @@ io.on("connection", (socket) => {
   console.log("A user connected");
 
   socket.on("new-message", (message) => {
-    // Handle the new message, e.g., save it to the database
     console.log("New message received in backend:", message);
 
-    // Broadcast the message to all connected clients, including the sender
     io.emit("new-message", message);
   });
 

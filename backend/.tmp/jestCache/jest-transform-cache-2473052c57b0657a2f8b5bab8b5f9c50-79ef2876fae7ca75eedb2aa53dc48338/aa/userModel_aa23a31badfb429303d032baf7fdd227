@@ -1,0 +1,56 @@
+71969c753c9c9c621c72a1711e879025
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const mongoose_1 = __importStar(require("mongoose"));
+const userSchema = new mongoose_1.Schema({
+    googleId: { type: String, required: true },
+    displayName: { type: String, required: true },
+    messages: [{ type: mongoose_1.default.Types.ObjectId, ref: "Message" }], // Reference to Message model
+});
+exports.default = mongoose_1.default.model("User", userSchema);
+// esta es la actual. cuidado con ella
+// import mongoose, { Schema, Document } from "mongoose";
+// export interface IUser extends Document {
+//   googleId: string;
+//   displayName: string;
+//   messages: mongoose.Types.ObjectId[]; // Add a reference to messages
+// }
+// const userSchema: Schema = new Schema({
+//   googleId: { type: String, required: true },
+//   displayName: { type: String, required: true },
+//   messages: [{ type: mongoose.Types.ObjectId, ref: "Message" }], // Reference to Message model
+// });
+// export default mongoose.model<IUser>("User", userSchema);
+// import mongoose, { Schema, Document } from "mongoose";
+// export interface IUser extends Document {
+//   googleId: string;
+//   displayName: string;
+// }
+// const userSchema: Schema = new Schema({
+//   googleId: { type: String, required: true },
+//   displayName: { type: String, required: true },
+// });
+// export default mongoose.model<IUser>("User", userSchema);

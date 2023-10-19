@@ -1,0 +1,43 @@
+ok, so, the result is the creation of a message in the MongoDB database. That's what I'm trying to do. It works and I like it. The function returns a document of this type
+
+{"_id":{"$oid":"6529a3e3eb9cb9c57c7ecc9e"},"recipientUser":{"$oid":"6526e63b0133540688001e69"},"author":{"$oid": "6526e57b0133540688001e65"},"text":"alterna again here","createdAt":{"$date":{"$numberLong":"1697227747075"}},"__v":{"$numberInt":"0"}}
+
+So far so good, the mongo db document should still be created in the same way. Now I will give you my messageModel so you can memorize it and have more information. then I will tell you the change I want to make:
+
+here my messageModel
+
+import mongoose, { Schema, Document } from "mongoose";
+
+export interface IMessage extends Document {
+  recipientUser: mongoose.Types.ObjectId; // Reference to User model
+  author: mongoose.Types.ObjectId; // Reference to User model
+  text: string;
+  createdAt: Date;
+}
+
+const messageSchema: Schema = new Schema({
+  recipientUser: { type: mongoose.Types.ObjectId, ref: "User", required: true }, // Reference to User model
+  author: { type: mongoose.Types.ObjectId, ref: "User", required: true }, // Reference to User model
+  text: { type: String, required: true },
+  createdAt: { type: Date, default: Date.now },
+});
+
+export default mongoose.model<IMessage>("Message", messageSchema);
+
+ok listen carefully:
+
+currently it works like this: the path. 
+
+"/api/messages/:userId",
+
+works to create the message. userId must be replaced by a mongoose id. 
+
+then i have to manually add the fields author (mongoose id) and text (string). when this is done the message is created and stored in the database. remember how it currently works. now i will tell you the change i want to implement.
+
+I want to change the operation of the author property. Currently I have to insert this value manually through the <form> of my html. The change I want to make, is that the function requires the mongoose id of the authenticated and logged in user. This user is the sender of the message. I want the function to make a request for this user and automatically append his mongooseid to the author field of the message I am creating. I want you to repeat what I want before I propose any code.
+
+
+ok i see you understand well what i want to change. now i want you to propose me a function called sendMessage1 that does what i have asked you to do. base it on my sendMessage function and just implement the change i have told you. sendMessage1 must also implement the sockets in the same way as sendMessage. the 2 functions will be present in my messageController. I give you my current sendMessage function to take it as a reference and make the necessary changes:
+
+
+

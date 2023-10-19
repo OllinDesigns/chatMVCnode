@@ -1,0 +1,12 @@
+The issue you're facing seems to be related to the request made from Postman not correctly passing the user's authentication session data. The session data should be managed by the cookies stored in your browser. To ensure that you're using the same session in Postman as you are in your browser, follow these steps:
+
+    Ensure that you're using Postman correctly. To maintain sessions, you should use the same session from your browser. This usually means sharing cookies between your browser and Postman. Try the following:
+        In Postman, make sure you use the same base URL as you use in your browser. You might need to set up a new Postman environment to manage different sets of variables.
+        Use Postman's "Interceptor" feature to capture and set cookies from your browser in Postman. This feature allows you to share cookies between your browser and Postman.
+
+    In Postman, check if you're passing the necessary cookies or session tokens with your request. Since you're using sessions for authentication, your browser should have cookies set for the session, and these cookies must be included in your request headers.
+        Ensure that your Postman request includes the cookies or session tokens set by your server during authentication.
+
+    Make sure that the session data you are getting from the Postman request matches what is expected by your server.
+
+To summarize, the most likely problem is related to the handling of sessions and cookies in your Postman requests. You need to ensure that you're passing the correct session data, including cookies, in your requests. If you continue to face issues, using the Postman Interceptor feature to capture and set cookies is highly recommended, as it will help maintain the session between your browser and Postman.

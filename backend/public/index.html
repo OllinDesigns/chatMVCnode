@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Chat with sockets</title>
+    <!-- <script src="/socket.io/socket.io.js"></script> -->
+    <script src="main.js"></script> 
+  </head>
+  <body>
+    <h1>Chat of the cat </h1>
+    <br>
+    <h2>Chatroom 1</h2>
+    <br>
+
+    <!-- Go to <a href="./chatroom.html">Chatroom 2</a> -->
+<br>
+    <br/>
+    <form onsubmit="return sendMessage(event)">
+      <!-- <label for="recipientUser">Recipient User:</label>
+      <br>
+      <input type="text" id="recipientUser" placeholder="User ID"> -->
+      <br>
+      <label for="text">Message:</label>
+      <br>
+      <input type="text" id="text" placeholder="Write your message">
+      <input type="submit" value="Send">
+    </form>
+    
+ 
+
+    <div id="messages"></div>
+  </body>
+</html>
+
+<!-- esta tiene el author field
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Chat with sockets</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="main.js"></script> 
+  </head>
+  <body>
+    <h1>Chat of the cat </h1>
+
+
+    <br/>
+    <form onsubmit="return sendMessage(event)">
+      <label for="recipientUser">Recipient User:</label>
+      <br>
+      <input type="text" id="recipientUser" placeholder="User ID">
+      <br>
+      <label for="author">Author:</label>
+      <br>
+      <input type="text" id="author" placeholder="Author (User ID)">
+      <br>
+      <label for="text">Message:</label>
+      <br>
+      <input type="text" id="text" placeholder="Write your message">
+      <input type="submit" value="Send">
+    </form>
+    
+ 
+
+    <div id="messages"></div>
+  </body>
+</html>
+ -->
+
+
+
+<!-- este funciona con el array de simulacion -->
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Chat with sockets</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="main.js"></script> 
+  </head>
+  <body>
+    <h1>Chat of the cat </h1>
+
+    <br/>
+  <form onsubmit="return addMessage(this)">
+    <label for="recipientUser">recipientUser:</label>
+    <br>
+    <input type="text" id="recipientUser" placeholder="Name of the user you want to send the message" >   
+    <br>
+    <label for="author">Author:</label>
+    <br>
+    <input type="text" id="author" placeholder="your database id">
+    <br>
+    <label for="text">Message:</label>
+    <br>
+    <input type="text" id="text" placeholder="write your message">  
+    <input type="submit" value="Enviar!">
+  </form>
+
+    <div id="messages"></div>
+  </body>
+</html> -->

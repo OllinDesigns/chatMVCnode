@@ -158,7 +158,6 @@ const ChatBox = () => {
           flexDir="column"
           justifyContent="flex-end"
           p={3}
-          // bg="#E8E8E8"
           w="100%"
           h="100%"
           borderRadius="lg"

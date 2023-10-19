@@ -15,7 +15,7 @@ function SideDrawer() {
         textAlign="center"
         borderRadius="20px"
       >
-        <Text fontFamily="Montserrat" fontSize="3em">
+        <Text fontFamily="Montserrat" fontWeight="600" fontSize="3em">
           {" "}
           Let's Chat!{" "}
         </Text>

@@ -16,7 +16,7 @@ const Users = () => {
   }, []);
 
   return (
-    <Box width="35%">
+    <Box width="35%" marginTop="-10px">
       <Box
         margin="12px"
         padding="10px"

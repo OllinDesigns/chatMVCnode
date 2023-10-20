@@ -5,6 +5,13 @@ import { IUser } from "../models/userModel";
 export const sendMessage1 = async (req: Request, res: Response) => {
   try {
     const { text } = req.body;
+    if (!text || typeof text !== "string") {
+      return res.status(400).json({ error: "Invalid message text" });
+    }
+
+    if (!text) {
+      return res.status(400).json({ error: "Text cannot be empty" });
+    }
 
     const user = req.user as IUser | undefined;
 
@@ -18,6 +25,7 @@ export const sendMessage1 = async (req: Request, res: Response) => {
     });
 
     // console.log("New message:", newMessage);
+    user.messages.push(newMessage._id);
 
     await newMessage.save();
 
@@ -30,6 +38,10 @@ export const sendMessage1 = async (req: Request, res: Response) => {
 
 export const getMessages = async (req: Request, res: Response) => {
   try {
+    if (!req.user) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
     const messages = await Message.find();
 
     return res.status(200).json(messages);

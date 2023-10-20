@@ -45,11 +45,16 @@ const Homepage = () => {
         border="6px solid #42357b"
       >
         <Box padding="10px" textAlign="center" marginBottom="15px">
-        <Text margin="10px" textAlign="center" fontFamily="Work Sans" fontSize="1.3em" fontWeight="bold">
-        Welcome to the chat. You need a Google account to access. have your
+          <Text
+            margin="10px"
+            textAlign="center"
+            fontFamily="Work Sans"
+            fontSize="1.3em"
+            fontWeight="bold"
+          >
+            Welcome to the chat. You need a Google account to access. Have your
             login!
-                </Text>
-          
+          </Text>
         </Box>
         <Tabs variant="soft-rounded" colorScheme="green">
           <TabList mb="1em">
@@ -88,17 +93,24 @@ const Homepage = () => {
                   fontSize="1.4em"
                 >
                   <a href="http://localhost:8080/auth/google">
-                    Click HERE to sign in with Google
+                    Click HERE to log in with Google
                   </a>
                 </Text>
-                
               </Box>
-              <Text margin="10px" textAlign="center" fontFamily="Work Sans" fontSize="1.3em">
-                with some Google accounts you have to give your password 2 times, it's not my fault, it's Google stuff...
+              <Box marginTop="30px">
+                <Text
+                  margin="10px"
+                  textAlign="center"
+                  fontFamily="Work Sans"
+                  fontSize="1.3em"
+                >
+                  with some Google accounts you have to give your password 2
+                  times, it's not my fault, it's Google stuff...
                 </Text>
+              </Box>
             </TabPanel>
             <TabPanel>
-            <Box
+              <Box
                 background="#6b5ab8"
                 borderRadius="lg"
                 p={3}
@@ -111,7 +123,9 @@ const Homepage = () => {
                   textAlign="center"
                   fontSize="1.4em"
                 >
-                 <a href="https://myaccount.google.com/">Click HERE to sign out Google</a>
+                  <a href="https://myaccount.google.com/">
+                    Click HERE to sign out Google
+                  </a>
                 </Text>
               </Box>
             </TabPanel>

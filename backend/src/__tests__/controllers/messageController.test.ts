@@ -3,7 +3,6 @@ import { sendMessage1, getMessages } from "../../controllers/messageController";
 import Message from "../../models/messageModel";
 
 describe("Test the sendMessage function", () => {
-  
   it("should return an error message when user is not authenticated", async () => {
     const req: Request = {
       body: {
@@ -39,8 +38,6 @@ describe("Test the sendMessage function", () => {
     expect(res.status).toHaveBeenCalledWith(401);
     expect(res.json).toHaveBeenCalledWith({ error: "User not authenticated" });
   });
-
-
 });
 
 describe("Testiung the getMessages function", () => {
@@ -134,7 +131,6 @@ describe("Testiung the getMessages function", () => {
     jest.spyOn(Message, "find").mockResolvedValue(messages);
 
     await getMessages(req, res);
-
 
     const expectedSortedMessages = [...messages].sort(
       (a: any, b: any) => a.createdAt - b.createdAt

@@ -21,7 +21,12 @@ export const createUserFromOAuth = async (userData: AuthenticatedUser) => {
       displayName,
     });
 
-    await newUser.save();
+    try {
+      await newUser.save();
+    } catch (error) {
+      console.error("Error saving user:", error);
+      throw new Error("Failed to save user data");
+    }
 
     console.log(
       `function createUserFromOAuth from userController is being used`

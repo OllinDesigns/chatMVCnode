@@ -16,7 +16,7 @@ I present a REST API application, made in NodeJS, Typescript and React. It is a 
 
 3. Now configure MongoDB with dot.env
 
-## MongoDb
+### MongoDb
 
 The file backend/database/db.ts is responsible for the connection settings to the database. It uses an .env file to protect the connection string of every user. It works as follows:
 
@@ -52,5 +52,7 @@ Connected to MongoDB
 
 - The React application is generated and directs you to the chat login. There, you must authenticate using your Google account. Once your authentication has been successful you will be redirected to the Chatroom, where you can chat with several users.
 
+5. Test with Jest: go to backend folder and type:
 
-
+   ```bash
+   yarn start

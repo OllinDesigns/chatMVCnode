@@ -24,7 +24,7 @@ router.get(
 
 router.post(
   "/api/messagesToChatroom",
-  authController.isLoggedIn,
+  // authController.isLoggedIn,
   messageController.sendMessage1
 );
 
